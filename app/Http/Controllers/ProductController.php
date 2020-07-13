@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Product;
+use App\Category;
 
 use Illuminate\Http\Request;
 
@@ -16,8 +17,10 @@ class ProductController extends Controller
 
     public function index()
     {
-        return Product::where('user_id', auth()->id())->get();
-    }
+        
+
+   return Product::where('user_id', auth()->id())->get();
+       }
 
     /**
      * Store a newly created resource in storage.
@@ -29,11 +32,26 @@ class ProductController extends Controller
     {
         $product = new Product();
         $product->description = $request->description;
+        $product->nombre = "Oscar";
+        $product->precio = 23;
+        $product->imagen = 12;
         $product->user_id =auth()->id();
         $product->save();
         
 
         return $product;
+     }
+
+     public function categ(){
+
+
+        return Category::all();
+     }
+        public function show($id)
+    {
+        
+   
+        return Product::where("products.category","=",$id)->get();
      }
 
     /**
@@ -70,5 +88,6 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product->delete();
+
     }
 }
